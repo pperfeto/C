@@ -7,6 +7,24 @@ void abertura() {
 	printf("/****************/\n\n");
 }
 
+void desenhaforca(char* palavrasecreta, char* chutes, int tentativas) {
+	printf("Você já deu %d chutes\n", tentativas);
+		
+	for(int i = 0; i < strlen(palavrasecreta); i++) {
+
+		if(jachutou(palavrasecreta[1], chutes, tentativas)) {
+				printf("%c ", palavrasecreta[i]);
+		} else {
+			printf("_ ");
+		}
+	}
+	printf("\n");	
+}
+
+void escolhepalavra(char* palavrasecreta) {
+    sprintf(palavrasecreta, "MELANCIA");
+}
+
 void chuta(char chutes[], int* tentativas) {
 	char chute;
 	printf("Qual letra? ");
@@ -30,7 +48,6 @@ int jachutou(char letra, char* chutes, int tentativas) {
 int main() {
 
 	char palavrasecreta[20];
-	sprintf(palavrasecreta, "MELANCIA");
 
 	int acertou = 0;
 	int enforcou = 0;
@@ -39,21 +56,10 @@ int main() {
 	int tentativas = 0;
 
 	abertura();
+	escolhepalavra(palavrasecreta);
 
 	do {
-		
-		printf("Você já deu %d chutes\n", tentativas);
-		
-		for(int i = 0; i < strlen(palavrasecreta); i++) {
-
-			if(jachutou(palavrasecreta[1], chutes, tentativas)) {
-				printf("%c ", palavrasecreta[i]);
-			} else {
-				printf("_ ");
-			}
-		}
-		printf("\n");
-
+		desenhaforca(palavrasecreta, chutes, tentativas);
 		chuta(chutes, &tentativas);
 
 
