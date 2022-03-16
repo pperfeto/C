@@ -16,6 +16,17 @@ void chuta(char chutes[], int* tentativas) {
 	(*tentativas)++;
 }
 
+int jachutou(char letra, char* chutes, int tentativas) {
+	int achou = 0;
+	for(int j = 0; j < tentativas; j++) {
+		if(chutes[j] == letra) {
+			achou = 1;
+			break;
+		}
+	}
+	return achou;
+}
+
 int main() {
 
 	char palavrasecreta[20];
@@ -34,16 +45,8 @@ int main() {
 		printf("Você já deu %d chutes\n", tentativas);
 		
 		for(int i = 0; i < strlen(palavrasecreta); i++) {
-			int achou = 0;
 
-			for(int j = 0; j < tentativas; j++) {
-				if(chutes[j] == palavrasecreta[i]) {
-					achou = 1;
-					break;
-				}
-			}
-
-			if(achou) {
+			if(jachutou(palavrasecreta[1], chutes, tentativas)) {
 				printf("%c ", palavrasecreta[i]);
 			} else {
 				printf("_ ");
