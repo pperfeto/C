@@ -1,68 +1,71 @@
 #include <stdio.h>
 #include <string.h>
 
+char palavrasecreta[20];
+char chutes[26];
+int tentativas = 0;
+
 void abertura() {
-	printf("/****************/\n");
-	printf("/ Jogo de Forca */\n");
-	printf("/****************/\n\n");
+    printf("/****************/\n");
+    printf("/ Jogo de Forca */\n");
+    printf("/****************/\n\n");
 }
 
-void desenhaforca(char* palavrasecreta, char* chutes, int tentativas) {
-	printf("Você já deu %d chutes\n", tentativas);
-		
-	for(int i = 0; i < strlen(palavrasecreta); i++) {
+void chuta() {
+    char chute;
+    printf("Qual letra? ");
+    scanf(" %c", &chute);
 
-		if(jachutou(palavrasecreta[1], chutes, tentativas)) {
-				printf("%c ", palavrasecreta[i]);
-		} else {
-			printf("_ ");
-		}
-	}
-	printf("\n");	
+    chutes[tentativas] = chute;
+    tentativas++;
 }
 
-void escolhepalavra(char* palavrasecreta) {
+int jachutou(char letra) {
+    int achou = 0;
+    for(int j = 0; j < tentativas; j++) {
+        if(chutes[j] == letra) {
+            achou = 1;
+            break;
+        }
+    }
+
+    return achou;
+}
+
+void desenhaforca() {
+
+    printf("Você já deu %d chutes\n", tentativas);
+
+    for(int i = 0; i < strlen(palavrasecreta); i++) {
+
+        if(jachutou(palavrasecreta[i])) {
+            printf("%c ", palavrasecreta[i]);
+        } else {
+            printf("_ ");
+        }
+
+    }
+    printf("\n");
+
+}
+
+void escolhepalavra() {
     sprintf(palavrasecreta, "MELANCIA");
-}
-
-void chuta(char chutes[], int* tentativas) {
-	char chute;
-	printf("Qual letra? ");
-	scanf(" %c", &chute);
-
-	chutes[*tentativas] = chute;
-	(*tentativas)++;
-}
-
-int jachutou(char letra, char* chutes, int tentativas) {
-	int achou = 0;
-	for(int j = 0; j < tentativas; j++) {
-		if(chutes[j] == letra) {
-			achou = 1;
-			break;
-		}
-	}
-	return achou;
 }
 
 int main() {
 
-	char palavrasecreta[20];
+    int acertou = 0;
+    int enforcou = 0;
 
-	int acertou = 0;
-	int enforcou = 0;
+    abertura();
+    escolhepalavra();
 
-	char chutes[26];
-	int tentativas = 0;
+    do {
 
-	abertura();
-	escolhepalavra(palavrasecreta);
+        desenhaforca();
+        chuta();
 
-	do {
-		desenhaforca(palavrasecreta, chutes, tentativas);
-		chuta(chutes, &tentativas);
-
-
-	} while (!acertou && !enforcou);
+    } while (!acertou && !enforcou);
 
 }
